@@ -1,5 +1,9 @@
-interface Window {
-  webkitSpeechRecognition: any;
+// Properly declare the Speech Recognition API types
+declare global {
+  interface Window {
+    webkitSpeechRecognition: any;
+    SpeechRecognition: any;
+  }
 }
 
 export function setupTranscriptionApp() {
@@ -20,7 +24,7 @@ export function setupTranscriptionApp() {
   }
 
   // Initialize speech recognition
-  const SpeechRecognition = window.webkitSpeechRecognition || (window as any).SpeechRecognition;
+  const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
   const recognition = new SpeechRecognition();
   
   recognition.continuous = true;
@@ -130,3 +134,6 @@ export function setupTranscriptionApp() {
     stopButton.disabled = !isRecording;
   }
 }
+
+// This export ensures the global declarations are treated as a module
+export {};
